@@ -133,7 +133,7 @@ function contain(col, item) {
 
 function notContain(col, item) {
   if (typeof col == "object" && !(col instanceof Array)) {
-    return false;
+    return true;
   } else {
     return !contain(col, item);
   }

@@ -16,8 +16,8 @@ describe("Object", function() {
   });
 
   describe("#notContain()", function() {
-    it("notContain(object, item) - fail", function() {
-      assert.notContain({x: 1}, "x").should.be.equal(false);
+    it("notContain(object, item) - always pass", function() {
+      assert.notContain({x: 1}, "x").should.be.equal(true);
     });
   });
 
