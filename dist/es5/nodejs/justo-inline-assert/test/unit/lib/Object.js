@@ -166,8 +166,8 @@ describe("Object", function() {
   });
 
   describe("#notLessThan()", function() {
-    it("notLessThan(object, bound) - always fail", function() {
-      assert.notLessThan({x: 1}, 2).should.be.equal(false);
+    it("notLessThan(object, bound) - always pass", function() {
+      assert.notLessThan({x: 1}, 2).should.be.equal(true);
     });
   });
 
@@ -178,8 +178,8 @@ describe("Object", function() {
   });
 
   describe("#notGreaterThan()", function() {
-    it("notGreaterThan(object, bound) - always fail", function() {
-      assert.notGreaterThan({x: 1}, 0).should.be.equal(false);
+    it("notGreaterThan(object, bound) - always pass", function() {
+      assert.notGreaterThan({x: 1}, 0).should.be.equal(true);
     });
   });
 

@@ -89,7 +89,7 @@ var gt = greaterThan;
 
 function notGreaterThan(one, two) {
   if (typeof one == "object") {
-    return false;
+    return true;
   } else {
     return !greaterThan(one, two);
   }
@@ -105,7 +105,7 @@ var lt = lessThan;
 
 function notLessThan(one, two) {
   if (typeof one == "object") {
-    return false;
+    return true;
   } else {
     return !lessThan(one, two);
   }

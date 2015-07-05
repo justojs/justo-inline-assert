@@ -121,7 +121,7 @@ exports.gt = gt;
 
 function notGreaterThan(one, two) {
   if (typeof one == "object") {
-    return false;
+    return true;
   } else {
     return !greaterThan(one, two);
   }
@@ -141,7 +141,7 @@ exports.lt = lt;
 
 function notLessThan(one, two) {
   if (typeof one == "object") {
-    return false;
+    return true;
   } else {
     return !lessThan(one, two);
   }
