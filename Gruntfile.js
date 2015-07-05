@@ -55,7 +55,7 @@ module.exports = function(grunt) {
 
       postCompilerMongo: {
         options: {
-          banner: "const assert = {};\n\n(function() {\n\n",
+          banner: "var assert = {};\n\n(function() {\n\n",
           footer: "\n\n" +
                   "assert.equal = equal;\n" +
                   "assert.eq = eq;\n" +

@@ -1,4 +1,4 @@
-const assert = {};
+var assert = {};
 
 (function() {
 
