@@ -14,7 +14,9 @@ function equal(one, two) {
   function deq(one, two) {
     var res;
 
-    if (one.prototype != two.prototype) {
+    if (one === null || one === undefined || two === null || two === undefined) {
+      res = one == two;
+    } else if (one.prototype != two.prototype) {
       res = false;
     } else if (one instanceof Date && two instanceof Date) {
       res = one.getTime() == two.getTime();

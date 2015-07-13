@@ -66,6 +66,14 @@ describe("Object", function() {
       assert.equal({x: 1}, {x: 1}).should.be.equal(true);
     });
 
+    it("equal({x: null}, {x: null}) - pass", function() {
+      assert.equal({x: null}, {x: null}).should.be.equal(true);
+    });
+
+    it("equal({x: null}, {x: undefined}) - pass", function() {
+      assert.equal({x: null}, {x: undefined}).should.be.equal(true);
+    });
+
     it("equal(object, object) - fail", function() {
       assert.equal({x: 1}, {x: 2}).should.be.equal(false);
     });
