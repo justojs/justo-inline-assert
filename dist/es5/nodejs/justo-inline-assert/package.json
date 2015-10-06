@@ -1,6 +1,6 @@
 {
   "name": "justo-inline-assert",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Inline assertions.",
   "homepage": "http://www.justojs.org",
   "author": {
@@ -16,7 +16,22 @@
     }
   ],
   "keywords": [
-    "assert"
+    "assert",
+    "Assertion test",
+    "Assertion testing",
+    "JavaScript test",
+    "JavaScript testing",
+    "Justo",
+    "Justo.js",
+    "justo-assert",
+    "Node test",
+    "Node testing",
+    "Node.js test",
+    "Node.js testing",
+    "Test",
+    "Testing",
+    "Unit test",
+    "Unit testing"
   ],
   "bugs": {
     "url": "https://github.com/justojs/justo-inline-assert/issues",

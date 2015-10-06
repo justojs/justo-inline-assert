@@ -228,120 +228,223 @@ describe("Object", function() {
   });
 
   describe("#have()", function() {
-    it("have(object, string) - pass", function() {
-      assert.have({x: 1, y: 2}, "x").should.be.equal(true);
+    describe("Own property", function() {
+      it("have(object, string) - pass", function() {
+        assert.have({x: 1, y: 2}, "x").should.be.equal(true);
+      });
+
+      it("have(object, string) - fail", function() {
+        assert.have({x: 1, y: 2}, "z").should.be.equal(false);
+      });
+
+      it("have(object, string[]) - pass", function() {
+        assert.have({x: 1, y: 2, z: 3}, ["x", "z"]).should.be.equal(true);
+      });
+
+      it("have(object, string[]) - some - fail", function() {
+        assert.have({x: 1, y: 2, z: 3}, ["x", "a"]).should.be.equal(false);
+      });
+
+      it("have(object, string[]) - none - fail", function() {
+        assert.have({x: 1, y: 2}, ["a", "b"]).should.be.equal(false);
+      });
+
+      it("have(object, []) - always fail", function() {
+        assert.have({x: 1, y: 2}, []).should.be.equal(false);
+      });
+
+      it("have(object, object) - pass", function() {
+        assert.have({x: 1, y: 2, z: 3}, {x: 1, z: 3}).should.be.equal(true);
+      });
+
+      it("have(object, object) - fail", function() {
+        assert.have({x: 1, y: 2, z: 3}, {x: 3, z: 1}).should.be.equal(false);
+      });
+
+      it("have(object, object) - some - fail", function() {
+        assert.have({x: 1, y: 2, z: 3}, {a: 1, y: 2}).should.be.equal(false);
+      });
+
+      it("have(object, object) - none - fail", function() {
+        assert.have({x: 1, y: 2, z: 3}, {a: 1, b: 2, c: 3}).should.be.equal(false);
+      });
     });
 
-    it("have(object, string) - fail", function() {
-      assert.have({x: 1, y: 2}, "z").should.be.equal(false);
-    });
+    describe("Class property", function() {
+      var obj;
+      function Class() {}
+      Object.defineProperty(Class.prototype, "prop1", {get: function() { return "value1"; }});
+      Object.defineProperty(Class.prototype, "prop2", {get: function() { return "value2"; }});
 
-    it("have(object, string[]) - pass", function() {
-      assert.have({x: 1, y: 2, z: 3}, ["x", "z"]).should.be.equal(true);
-    });
+      before(function() {
+        obj = new Class();
+      });
 
-    it("have(object, string[]) - some - fail", function() {
-      assert.have({x: 1, y: 2, z: 3}, ["x", "a"]).should.be.equal(false);
-    });
+      it("have(obj, string) - pass", function() {
+        assert.have(obj, "prop1").should.be.equal(true);
+      });
 
-    it("have(object, string[]) - none - fail", function() {
-      assert.have({x: 1, y: 2}, ["a", "b"]).should.be.equal(false);
-    });
+      it("have(obj, string) - fail", function() {
+        assert.have(obj, "unknown").should.be.equal(false);
+      });
 
-    it("have(object, []) - always fail", function() {
-      assert.have({x: 1, y: 2}, []).should.be.equal(false);
-    });
+      it("have(obj, string[]) - pass", function() {
+        assert.have(obj, ["prop1", "prop2"]).should.be.equal(true);
+      });
 
-    it("have(object, object) - pass", function() {
-      assert.have({x: 1, y: 2, z: 3}, {x: 1, z: 3}).should.be.equal(true);
-    });
+      it("have(obj, string[]) - fail", function() {
+        assert.have(obj, ["prop1", "unknown", "prop2"]).should.be.equal(false);
+      });
 
-    it("have(object, object) - fail", function() {
-      assert.have({x: 1, y: 2, z: 3}, {x: 3, z: 1}).should.be.equal(false);
-    });
+      it("have(obj, object) - pass", function() {
+        assert.have(obj, {prop1: "value1", prop2: "value2"}).should.be.equal(true);
+      });
 
-    it("have(object, object) - some - fail", function() {
-      assert.have({x: 1, y: 2, z: 3}, {a: 1, y: 2}).should.be.equal(false);
-    });
-
-    it("have(object, object) - none - fail", function() {
-      assert.have({x: 1, y: 2, z: 3}, {a: 1, b: 2, c: 3}).should.be.equal(false);
+      it("have(obj, object) - fail", function() {
+        assert.have(obj, {prop1: "VALUE1", prop2: "VALUE2"}).should.be.equal(false);
+      });
     });
   });
 
   describe("#notHave()", function() {
-    it("notHave(object, string) - fail", function() {
-      assert.notHave({x: 1, y: 2}, "x").should.be.equal(false);
+    describe("Own property", function() {
+      it("notHave(object, string) - fail", function() {
+        assert.notHave({x: 1, y: 2}, "x").should.be.equal(false);
+      });
+
+      it("notHave(object, string) - pass", function() {
+        assert.notHave({x: 1, y: 2}, "z").should.be.equal(true);
+      });
+
+      it("notHave(object, string[]) - fail", function() {
+        assert.notHave({x: 1, y: 2, z: 3}, ["x", "z"]).should.be.equal(false);
+      });
+
+      it("notHave(object, string[]) - some - pass", function() {
+        assert.notHave({x: 1, y: 2, z: 3}, ["x", "a"]).should.be.equal(true);
+      });
+
+      it("notHave(object, string[]) - none - pass", function() {
+        assert.notHave({x: 1, y: 2}, ["a", "b"]).should.be.equal(true);
+      });
+
+      it("notHave(object, []) - always pass", function() {
+        assert.notHave({x: 1, y: 2}, []).should.be.equal(true);
+      });
+
+      it("notHave(object, object) - always fail", function() {
+        assert.notHave({x: 1, y: 2, z: 3}, {x: 1, z: 3}).should.be.equal(false);
+      });
+
+      it("notHave(object, object) - pass", function() {
+        assert.notHave({x: 1, y: 2, z: 3}, {x: 3, z: 1}).should.be.equal(true);
+      });
+
+      it("notHave(object, object) - some - pass", function() {
+        assert.notHave({x: 1, y: 2, z: 3}, {a: 1, y: 2}).should.be.equal(true);
+      });
+
+      it("notHave(object, object) - none - pass", function() {
+        assert.notHave({x: 1, y: 2, z: 3}, {a: 1, b: 2, c: 3}).should.be.equal(true);
+      });
     });
 
-    it("notHave(object, string) - pass", function() {
-      assert.notHave({x: 1, y: 2}, "z").should.be.equal(true);
-    });
+    describe("Class property", function() {
+      var obj;
+      function Class() {}
+      Object.defineProperty(Class.prototype, "prop1", {get: function() { return "value1"; }});
+      Object.defineProperty(Class.prototype, "prop2", {get: function() { return "value2"; }});
 
-    it("notHave(object, string[]) - fail", function() {
-      assert.notHave({x: 1, y: 2, z: 3}, ["x", "z"]).should.be.equal(false);
-    });
+      before(function() {
+        obj = new Class();
+      });
 
-    it("notHave(object, string[]) - some - pass", function() {
-      assert.notHave({x: 1, y: 2, z: 3}, ["x", "a"]).should.be.equal(true);
-    });
+      it("notHave(obj, string) - fail", function() {
+        assert.notHave(obj, "prop1").should.be.equal(false);
+      });
 
-    it("notHave(object, string[]) - none - pass", function() {
-      assert.notHave({x: 1, y: 2}, ["a", "b"]).should.be.equal(true);
-    });
+      it("notHave(obj, string) - pass", function() {
+        assert.notHave(obj, "unknown").should.be.equal(true);
+      });
 
-    it("notHave(object, []) - always pass", function() {
-      assert.notHave({x: 1, y: 2}, []).should.be.equal(true);
-    });
+      it("notHave(obj, string[]) - fail", function() {
+        assert.notHave(obj, ["prop1", "prop2"]).should.be.equal(false);
+      });
 
-    it("notHave(object, object) - always fail", function() {
-      assert.notHave({x: 1, y: 2, z: 3}, {x: 1, z: 3}).should.be.equal(false);
-    });
+      it("notHave(obj, string[]) - pass", function() {
+        assert.notHave(obj, ["prop1", "unknown", "prop2"]).should.be.equal(true);
+      });
 
-    it("notHave(object, object) - pass", function() {
-      assert.notHave({x: 1, y: 2, z: 3}, {x: 3, z: 1}).should.be.equal(true);
-    });
+      it("notHave(obj, object) - fail", function() {
+        assert.notHave(obj, {prop1: "value1", prop2: "value2"}).should.be.equal(false);
+      });
 
-    it("notHave(object, object) - some - pass", function() {
-      assert.notHave({x: 1, y: 2, z: 3}, {a: 1, y: 2}).should.be.equal(true);
-    });
-
-    it("notHave(object, object) - none - pass", function() {
-      assert.notHave({x: 1, y: 2, z: 3}, {a: 1, b: 2, c: 3}).should.be.equal(true);
+      it("notHave(obj, object) - pass", function() {
+        assert.notHave(obj, {prop1: "VALUE1", prop2: "VALUE2"}).should.be.equal(true);
+      });
     });
   });
 
   describe("#haveAny()", function() {
-    it("haveAny(object, []) - fail", function() {
-      assert.haveAny({x: 1, y: 2}, []).should.be.equal(false);
+    describe("Own property", function() {
+      it("haveAny(object, []) - fail", function() {
+        assert.haveAny({x: 1, y: 2}, []).should.be.equal(false);
+      });
+
+      it("haveAny(object, string[]) - pass", function() {
+        assert.haveAny({x: 1, y: 2}, ["a", "b", "x", "z"]).should.be.equal(true);
+      });
+
+      it("haveAny(object, string[]) - fail", function() {
+        assert.haveAny({x: 1, y: 2}, ["a", "b"]).should.be.equal(false);
+      });
+
+      it("haveAny(object, object) - pass", function() {
+        assert.haveAny({x: 1, y: 2}, {x: 1, X: 1}).should.be.equal(true);
+      });
+
+      it("haveAny(object, object) - have but with different value - fail", function() {
+        assert.haveAny({x: 1, y: 2}, {x: 2, y: 1}).should.be.equal(false);
+      });
+
+      it("haveAny(object, object) - none - fail", function() {
+        assert.haveAny({x: 1, y: 2}, {a: 1, b: 2}).should.be.equal(false);
+      });
+
+      it("haveAny(object, object) - with a value being an object - pass", function() {
+        assert.haveAny({a: 1, b: 2, c: [1, 2], d: 3}, {c: [1, 2]}).should.be.equal(true);
+      });
+
+      it("haveAny(object, object) - with a value being an object - fail", function() {
+        assert.haveAny({a: 1, b: 2, c: [1, 2], d: 3}, {c: [2, 1]}).should.be.equal(false);
+      });
     });
 
-    it("haveAny(object, string[]) - pass", function() {
-      assert.haveAny({x: 1, y: 2}, ["a", "b", "x", "z"]).should.be.equal(true);
-    });
+    describe("Class property", function() {
+      var obj;
+      function Class() {}
+      Object.defineProperty(Class.prototype, "prop1", {get: function() { return "value1"; }});
+      Object.defineProperty(Class.prototype, "prop2", {get: function() { return "value2"; }});
 
-    it("haveAny(object, string[]) - fail", function() {
-      assert.haveAny({x: 1, y: 2}, ["a", "b"]).should.be.equal(false);
-    });
+      before(function() {
+        obj = new Class();
+      });
 
-    it("haveAny(object, object) - pass", function() {
-      assert.haveAny({x: 1, y: 2}, {x: 1, X: 1}).should.be.equal(true);
-    });
+      it("haveAny(obj, string[]) - pass", function() {
+        assert.haveAny(obj, ["unknown", "prop1", "unknown2"]).should.be.equal(true);
+      });
 
-    it("haveAny(object, object) - have but with different value - fail", function() {
-      assert.haveAny({x: 1, y: 2}, {x: 2, y: 1}).should.be.equal(false);
-    });
+      it("haveAny(obj, string[]) - fail", function() {
+        assert.haveAny(obj, ["unknown", "unknown2"]).should.be.equal(false);
+      });
 
-    it("haveAny(object, object) - none - fail", function() {
-      assert.haveAny({x: 1, y: 2}, {a: 1, b: 2}).should.be.equal(false);
-    });
+      it("haveAny(obj, object) - true", function() {
+        assert.haveAny(obj, {prop1: "value1", prop2: "VALUE2"}).should.be.equal(true);
+      });
 
-    it("haveAny(object, object) - with a value being an object - pass", function() {
-      assert.haveAny({a: 1, b: 2, c: [1, 2], d: 3}, {c: [1, 2]}).should.be.equal(true);
-    });
-
-    it("haveAny(object, object) - with a value being an object - fail", function() {
-      assert.haveAny({a: 1, b: 2, c: [1, 2], d: 3}, {c: [2, 1]}).should.be.equal(false);
+      it("haveAny(obj, object) - fail", function() {
+        assert.haveAny(obj, {prop1: "VALUE1", prop2: "VALUE2"}).should.be.equal(false);
+      });
     });
   });
 });

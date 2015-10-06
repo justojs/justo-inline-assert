@@ -130,6 +130,8 @@ notHave(object, props : string[]) : boolean
 notHave(object, props : object) : boolean
 ```
 
+The properties can be defined into the object or its class.
+
 ### haveAny()
 
 Checks whether an object has at least one property of a set:
@@ -138,6 +140,8 @@ Checks whether an object has at least one property of a set:
 haveAny(object, props : string[]) : boolean
 haveAny(object, object) : boolean
 ```
+
+The properties can be defined into the object or its class.
 
 ### allHave()
 
@@ -152,6 +156,8 @@ notAllHave(array, prop : string) : boolean
 notAllHave(array, props : string[]) : boolean
 notAllHave(array, props : object) : boolean
 ```
+
+The properties can be defined into the object or its class.
 
 ### raise() and notRaise()
 

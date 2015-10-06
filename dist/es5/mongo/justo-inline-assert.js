@@ -150,29 +150,7 @@ function notInsideOf(item, col) {
 }
 
 function have(obj, props) {
-  var res;
-
-  if (typeof props == "string") {
-    res = obj.hasOwnProperty(props);
-  } else if (props instanceof Array) {
-    res = props.length > 0;
-
-    for (var i = 0; res && i < props.length; ++i) {
-      res = obj.hasOwnProperty(props[i]);
-    }
-  } else {
-    var keys = Object.keys(props);
-
-    res = keys.length > 0;
-    for (var i = 0, _keys = Object.keys(props); res && i < _keys.length; ++i) {
-      var _name2 = _keys[i];
-      var value = props[_name2];
-
-      res = obj.hasOwnProperty(_name2) && equal(obj[_name2], value);
-    }
-  }
-
-  return res;
+  return typeof props == "string" ? hasProperty(obj, props) : hasProperties(obj, props);
 }
 
 function notHave(obj, props) {
@@ -180,24 +158,29 @@ function notHave(obj, props) {
 }
 
 function haveAny(obj, props) {
-  var res;
-
-  res = false;
+  var exist;
 
   if (props instanceof Array) {
-    for (var i = 0; !res && i < props.length; ++i) {
-      res = obj.hasOwnProperty(props[i]);
+    exist = false;
+
+    if (props.length > 0) {
+      for (var i = 0; !exist && i < props.length; ++i) {
+        exist = hasProperty(obj, props[i]);
+      }
     }
   } else {
-    for (var _name3 in props) {
-      if (obj.hasOwnProperty(_name3) && equal(obj[_name3], props[_name3])) {
-        res = true;
-        break;
-      }
+    var keys = Object.keys(props);
+
+    exist = false;
+    for (var i = 0; !exist && i < keys.length; ++i) {
+      var _name2 = keys[i];
+      var value = props[_name2];
+
+      exist = hasProperty(obj, _name2) && equal(obj[_name2], value);
     }
   }
 
-  return res;
+  return exist;
 }
 
 function allHave(list, props) {
@@ -281,6 +264,52 @@ function instanceOf(obj, clss) {
 
 function notInstanceOf(obj, clss) {
   return !instanceOf(obj, clss);
+}
+
+function hasProperty(obj, prop) {
+  var exist;
+
+  exist = obj.hasOwnProperty(prop);
+
+  if (!exist && obj.constructor) {
+    var desc = Object.getOwnPropertyDescriptor(obj.constructor.prototype, prop);
+    exist = desc ? !!desc.get : false;
+  }
+
+  return exist;
+}
+
+function hasProperties(obj, props) {
+  var exist;
+
+  if (props instanceof Array) {
+    if (props.length === 0) {
+      exist = false;
+    } else {
+      exist = true;
+
+      for (var i = 0; exist && i < props.length; ++i) {
+        exist = hasProperty(obj, props[i]);
+      }
+    }
+  } else {
+    var keys = Object.keys(props);
+
+    if (keys.length === 0) {
+      exist = false;
+    } else {
+      exist = true;
+
+      for (var i = 0; exist && i < keys.length; ++i) {
+        var _name3 = keys[i];
+        var value = props[_name3];
+
+        exist = hasProperty(obj, _name3) && equal(obj[_name3], value);
+      }
+    }
+  }
+
+  return exist;
 }
 
 
