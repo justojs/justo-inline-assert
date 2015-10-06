@@ -272,8 +272,10 @@ function hasProperty(obj, prop) {
   exist = obj.hasOwnProperty(prop);
 
   if (!exist && obj.constructor) {
-    var desc = Object.getOwnPropertyDescriptor(obj.constructor.prototype, prop);
-    exist = desc ? !!desc.get : false;
+    for (var clss = obj.constructor; !exist && clss && clss.prototype; clss = clss.super_ || Object.getPrototypeOf(clss)) {
+      var desc = Object.getOwnPropertyDescriptor(clss.prototype, prop);
+      exist = desc ? !!desc.get : false;
+    }
   }
 
   return exist;

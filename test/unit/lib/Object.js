@@ -1,4 +1,5 @@
 //imports
+const util = require("util");
 const assert = require("../../../dist/es5/nodejs/justo-inline-assert");
 
 //suite
@@ -272,16 +273,23 @@ describe("Object", function() {
 
     describe("Class property", function() {
       var obj;
-      function Class() {}
-      Object.defineProperty(Class.prototype, "prop1", {get: function() { return "value1"; }});
-      Object.defineProperty(Class.prototype, "prop2", {get: function() { return "value2"; }});
+
+      function A() {}
+      Object.defineProperty(A.prototype, "propA", {get: function() { return "valueA"; }});
+      function B() { A.call(this); }
+      util.inherits(B, A);
+      Object.defineProperty(B.prototype, "propB", {get: function() { return "valueB"; }});
 
       before(function() {
-        obj = new Class();
+        obj = new B();
       });
 
-      it("have(obj, string) - pass", function() {
-        assert.have(obj, "prop1").should.be.equal(true);
+      it("have(obj, string) - direct property - pass", function() {
+        assert.have(obj, "propB").should.be.equal(true);
+      });
+
+      it("have(obj, string) - inherited property - pass", function() {
+        assert.have(obj, "propA").should.be.equal(true);
       });
 
       it("have(obj, string) - fail", function() {
@@ -289,19 +297,19 @@ describe("Object", function() {
       });
 
       it("have(obj, string[]) - pass", function() {
-        assert.have(obj, ["prop1", "prop2"]).should.be.equal(true);
+        assert.have(obj, ["propA", "propB"]).should.be.equal(true);
       });
 
       it("have(obj, string[]) - fail", function() {
-        assert.have(obj, ["prop1", "unknown", "prop2"]).should.be.equal(false);
+        assert.have(obj, ["propA", "unknown", "propB"]).should.be.equal(false);
       });
 
       it("have(obj, object) - pass", function() {
-        assert.have(obj, {prop1: "value1", prop2: "value2"}).should.be.equal(true);
+        assert.have(obj, {propA: "valueA", propB: "valueB"}).should.be.equal(true);
       });
 
       it("have(obj, object) - fail", function() {
-        assert.have(obj, {prop1: "VALUE1", prop2: "VALUE2"}).should.be.equal(false);
+        assert.have(obj, {propA: "VALUEA", propB: "VALUEB"}).should.be.equal(false);
       });
     });
   });
