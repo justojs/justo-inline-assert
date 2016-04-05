@@ -1,17 +1,17 @@
 {
   "name": "justo-inline-assert",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Inline assertions.",
-  "homepage": "http://www.justojs.org",
+  "homepage": "http://justojs.org",
   "author": {
-    "name": "The Justo.js Development Group",
-    "email": "justojs.org@outlook.com",
-    "url": "http://www.justojs.org"
+    "name": "Justo Labs",
+    "email": "justojs@justolabs.com",
+    "url": "http://justojs.org"
   },
   "contributors": [
     {
       "name": "Raúl G. González",
-      "email": "raulggonzalezsw@outlook.com",
+      "email": "raulggonzalez@justojs.org",
       "url": ""
     }
   ],
@@ -35,38 +35,37 @@
   ],
   "bugs": {
     "url": "https://github.com/justojs/justo-inline-assert/issues",
-    "email": "justojs.org@outlook.com"
+    "email": "issues@justojs.org"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/justojs/justo-inline-assert.git"
   },
   "engines": {
-    "node": ">= 0.12.0"
+    "node": ">= 4.0"
   },
   "dependencies": {},
   "peerDependencies": {},
   "devDependencies": {
-    "should": "*",
-    "mocha": "*",
+    "babel-preset-es2015": "*",
     "grunt": "^0.4.5",
     "grunt-babel": "*",
     "grunt-contrib-clean": "*",
-    "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-jshint": "*",
     "grunt-travis-lint": "*",
-    "grunt-mocha-test": "*"
+    "grunt-mocha-test": "*",
+    "mocha": "*",
+    "should": "*"
   },
   "preferGlobal": false,
-  "main": "lib/index.js",
+  "main": "index.js",
   "files": [
     "lib",
     "test"
   ],
   "scripts": {
     "test": "grunt test"
-  },
-  "license": "MIT"
+  }
 }
