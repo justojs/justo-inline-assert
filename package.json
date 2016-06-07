@@ -1,11 +1,11 @@
 {
   "name": "justo-inline-assert",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Inline assertions.",
   "homepage": "http://justojs.org",
   "author": {
     "name": "Justo Labs",
-    "email": "justojs@justolabs.com",
+    "email": "info@justolabs.com",
     "url": "http://justojs.org"
   },
   "contributors": [
@@ -48,7 +48,7 @@
   "peerDependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "*",
-    "grunt": "^0.4.5",
+    "grunt": "*",
     "grunt-babel": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-copy": "*",

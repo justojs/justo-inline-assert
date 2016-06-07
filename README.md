@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/justojs/justo-inline-assert.svg)](https://travis-ci.org/justojs/justo-inline-assert)
+[![NPM version](http://img.shields.io/npm/v/justo-inline-assert.svg)](https://www.npmjs.org/package/justo-inline-assert)
+[![Build Status](https://travis-ci.org/justojs/justo-inline-assert.svg?branch=master)](https://travis-ci.org/justojs/justo-inline-assert)
+[![Dependency Status](https://david-dm.org/justojs/justo-inline-assert.svg)](https://david-dm.org/justojs/justo-inline-assert)
+[![devDependency Status](https://david-dm.org/justojs/justo-inline-assert/dev-status.svg)](https://david-dm.org/justojs/justo-inline-assert#info=devDependencies)
 
 In-line assertions.
 
@@ -39,6 +42,22 @@ Check whether two values are the same:
 ```
 same(one, two) : boolean
 notSame(one, two) : boolean
+```
+
+### similar() and notSimilar()
+
+Check whether an array is equal, in any order, to another:
+
+```
+similar(array, another) : boolean
+notSimilar(array, another) : boolean
+```
+
+Example:
+
+```
+similar([1, 2, 3], [3, 1, 2])     //true
+similar([1, 2, 3], [3, 1, 2, 0])  //false
 ```
 
 ### like() and notLike()

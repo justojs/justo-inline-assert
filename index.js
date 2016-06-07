@@ -95,6 +95,51 @@ export function notSame(one, two) {
 }
 
 /**
+ * Check whether an array is similar to another.
+ *
+ * @param one:object[]  The first array.
+ * @param two:object[]  The second array.
+ * @return boolean
+ */
+export function similar(one, two) {
+  var res;
+
+  //(1) pre
+  if (!(one instanceof Array && two instanceof Array)) return false;
+  if (one.length != two.length) return false;
+
+  //(2) check items
+  res = true;
+
+  for (let i of one) {
+    let check = false;
+
+    for (let j of two) {
+      if ((check = equal(i, j))) break;
+    }
+
+    if (!check) {
+      res = false;
+      break;
+    }
+  }
+
+  //(3) return
+  return res;
+}
+
+/**
+ * Check whether an array is not similar to another.
+ *
+ * @param one:object[]  The first array.
+ * @param two:object[]  The second array.
+ * @return boolean
+ */
+export function notSimilar(one, two) {
+  return !similar(one, two);
+}
+
+/**
  * Checks whether a value matches a regular expression.
  *
  * @param value:any     The value to check.

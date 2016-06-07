@@ -136,4 +136,56 @@ describe("Array", function() {
       assert.notAllHave(["x", "y"], {length: 2}).should.be.equal(true);
     });
   });
+
+  describe("#similar()", function() {
+    it("similar(object, object) : false", function() {
+      assert.similar("one", "one").should.be.equal(false);
+    });
+
+    it("similar([], []) : true", function() {
+      assert.similar([], []).should.be.equal(true);
+    });
+
+    it("similar(object[], object[]) : false - different lengths", function() {
+      assert.similar(["one", "two"], ["one", "two", "three"]).should.be.equal(false);
+    });
+
+    it("similar(object[], object[]) : true - arrays in another order", function() {
+      assert.similar(["one", "two", "three"], ["three", "two", "one"]).should.be.equal(true);
+    });
+
+    it("similar(object[], object[]) : true - arrays in same order", function() {
+      assert.similar(["one", "two", "three"], ["one", "two", "three"]).should.be.equal(true);
+    });
+
+    it("similar(object[], object[]) : false - different arrays", function() {
+      assert.similar(["one", "two", "four"], ["three", "two", "one"]).should.be.equal(false);
+    });
+  });
+
+  describe("#notSimilar()", function() {
+    it("notSimilar(object, object) : true", function() {
+      assert.notSimilar("one", "one").should.be.equal(true);
+    });
+
+    it("notSimilar([], []) : false", function() {
+      assert.notSimilar([], []).should.be.equal(false);
+    });
+
+    it("notSimilar(object[], object[]) : true - different lengths", function() {
+      assert.notSimilar(["one", "two"], ["one", "two", "three"]).should.be.equal(true);
+    });
+
+    it("notSimilar(object[], object[]) : false - arrays in another order", function() {
+      assert.notSimilar(["one", "two", "three"], ["three", "two", "one"]).should.be.equal(false);
+    });
+
+    it("notSimilar(object[], object[]) : false - arrays in same order", function() {
+      assert.notSimilar(["one", "two", "three"], ["one", "two", "three"]).should.be.equal(false);
+    });
+
+    it("notSimilar(object[], object[]) : true - different arrays", function() {
+      assert.notSimilar(["one", "two", "four"], ["three", "two", "one"]).should.be.equal(true);
+    });
+  });
 });
